@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.BookController" prefHeight="700.0" prefWidth="1000.0">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header" style="-fx-background-color: #2196F3; -fx-padding: 15;">
+            <Label text="QUẢN LÝ SÁCH" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Center: Form và Table -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+
+            <!-- Form nhập liệu -->
+            <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-background-radius: 5;">
+                <Label text="Thông tin sách" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120" prefWidth="120" />
+                        <ColumnConstraints minWidth="250" prefWidth="300" />
+                        <ColumnConstraints minWidth="120" prefWidth="120" />
+                        <ColumnConstraints minWidth="250" prefWidth="300" />
+                    </columnConstraints>
+
+                    <!-- Row 1 -->
+                    <Label text="Tên sách:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtTitle" promptText="Nhập tên sách"
+                               GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Tác giả:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtAuthor" promptText="Nhập tác giả"
+                               GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <!-- Row 2 -->
+                    <Label text="Nhà xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtPublisher" promptText="Nhập nhà xuất bản"
+                               GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Năm xuất bản:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtYear" promptText="Nhập năm"
+                               GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <!-- Row 3 -->
+                    <Label text="Tổng số bản:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="txtTotalCopies" promptText="Nhập tổng số"
+                               GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label text="Số bản có sẵn:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <TextField fx:id="txtAvailableCopies" promptText="Nhập số có sẵn"
+                               GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                </GridPane>
+
+                <!-- Buttons -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="btnAdd" text="Thêm" onAction="#handleAdd"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnUpdate" text="Cập nhật" onAction="#handleUpdate"
+                            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnDelete" text="Xóa" onAction="#handleDelete"
+                            style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnClear" text="Làm mới" onAction="#handleClear"
+                            style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                </HBox>
+            </VBox>
+
+            <!-- Search box -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
+                <Label text="Tìm kiếm:" />
+                <TextField fx:id="txtSearch" promptText="Nhập tên sách, tác giả hoặc nhà xuất bản" prefWidth="400" />
+                <Button text="Tìm kiếm" onAction="#handleSearch"
+                        style="-fx-background-color: #FF9800; -fx-text-fill: white;" />
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="bookTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50" />
+                    <TableColumn fx:id="colTitle" text="Tên sách" prefWidth="200" />
+                    <TableColumn fx:id="colAuthor" text="Tác giả" prefWidth="150" />
+                    <TableColumn fx:id="colPublisher" text="Nhà xuất bản" prefWidth="150" />
+                    <TableColumn fx:id="colYear" text="Năm" prefWidth="80" />
+                    <TableColumn fx:id="colTotalCopies" text="Tổng số" prefWidth="100" />
+                    <TableColumn fx:id="colAvailableCopies" text="Có sẵn" prefWidth="100" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Status bar -->
+    <bottom>
+        <HBox style="-fx-background-color: #eeeeee; -fx-padding: 10;">
+            <Label text="Sẵn sàng" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

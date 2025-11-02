@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.LoanController" prefHeight="750.0" prefWidth="1100.0">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header" style="-fx-background-color: #2196F3; -fx-padding: 15;">
+            <Label text="QUẢN LÝ MƯỢN SÁCH" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Center: Form và Table -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+
+            <!-- Form nhập liệu -->
+            <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-background-radius: 5;">
+                <Label text="Thông tin mượn sách" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120" prefWidth="120" />
+                        <ColumnConstraints minWidth="250" prefWidth="300" />
+                        <ColumnConstraints minWidth="120" prefWidth="120" />
+                        <ColumnConstraints minWidth="250" prefWidth="300" />
+                    </columnConstraints>
+
+                    <!-- Row 1 -->
+                    <Label text="Thành viên:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="5">
+                        <ComboBox fx:id="cmbMember" promptText="Chọn thành viên" prefWidth="300" />
+                        <Label fx:id="lblMemberInfo" style="-fx-font-size: 11; -fx-text-fill: #666;" />
+                    </VBox>
+
+                    <Label text="Sách:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <VBox GridPane.columnIndex="3" GridPane.rowIndex="0" spacing="5">
+                        <ComboBox fx:id="cmbBook" promptText="Chọn sách" prefWidth="300" />
+                        <Label fx:id="lblBookInfo" style="-fx-font-size: 11; -fx-text-fill: #666;" />
+                    </VBox>
+
+                    <!-- Row 2 -->
+                    <Label text="Ngày mượn:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="dpLoanDate" promptText="Chọn ngày mượn"
+                                GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="300" />
+
+                    <Label text="Ngày hạn trả:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="dpDueDate" promptText="Chọn ngày hạn trả"
+                                GridPane.columnIndex="3" GridPane.rowIndex="1" prefWidth="300" />
+
+                    <!-- Row 3 -->
+                    <Label text="Ngày trả:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <DatePicker fx:id="dpReturnDate" promptText="Chọn ngày trả"
+                                GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="300" />
+
+                    <Label text="Trạng thái:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <CheckBox fx:id="chkReturned" text="Đã trả sách"
+                              GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                </GridPane>
+
+                <!-- Buttons -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="btnAdd" text="Mượn sách" onAction="#handleAdd"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnUpdate" text="Cập nhật" onAction="#handleUpdate"
+                            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnReturn" text="Trả sách" onAction="#handleReturn"
+                            style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnDelete" text="Xóa" onAction="#handleDelete"
+                            style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnClear" text="Làm mới" onAction="#handleClear"
+                            style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                </HBox>
+            </VBox>
+
+            <!-- Search box -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
+                <Label text="Tìm theo Member ID:" />
+                <TextField fx:id="txtSearch" promptText="Nhập Member ID" prefWidth="300" />
+                <Button text="Tìm kiếm" onAction="#handleSearch"
+                        style="-fx-background-color: #FF9800; -fx-text-fill: white;" />
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50" />
+                    <TableColumn fx:id="colMemberId" text="Member ID" prefWidth="100" />
+                    <TableColumn fx:id="colBookId" text="Book ID" prefWidth="100" />
+                    <TableColumn fx:id="colLoanDate" text="Ngày mượn" prefWidth="120" />
+                    <TableColumn fx:id="colDueDate" text="Ngày hạn trả" prefWidth="120" />
+                    <TableColumn fx:id="colReturnDate" text="Ngày trả" prefWidth="120" />
+                    <TableColumn fx:id="colReturned" text="Trạng thái" prefWidth="120" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Status bar -->
+    <bottom>
+        <HBox style="-fx-background-color: #eeeeee; -fx-padding: 10;">
+            <Label text="Sẵn sàng | Lưu ý: Mỗi thành viên tối đa mượn 5 cuốn cùng lúc" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

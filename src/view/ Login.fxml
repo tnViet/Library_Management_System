@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.LoginController"
+            prefHeight="500.0" prefWidth="400.0"
+            style="-fx-background-color: #f5f5f5;">
+
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 30;">
+
+            <!-- Logo/Header -->
+            <VBox alignment="CENTER" spacing="10"
+                  style="-fx-background-color: #2196F3; -fx-padding: 30; -fx-background-radius: 10;">
+                <Label text="📚" style="-fx-font-size: 48;" />
+                <Label text="LIBRARY MANAGEMENT" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label text="SYSTEM" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+            </VBox>
+
+            <!-- Login Form -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+
+                <Label text="ĐĂNG NHẬP" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+                <!-- Username -->
+                <VBox spacing="5">
+                    <Label text="Username" style="-fx-font-size: 12; -fx-text-fill: #666;" />
+                    <TextField fx:id="txtUsername" promptText="Nhập username"
+                               style="-fx-font-size: 14; -fx-padding: 10;" />
+                </VBox>
+
+                <!-- Password -->
+                <VBox spacing="5">
+                    <Label text="Password" style="-fx-font-size: 12; -fx-text-fill: #666;" />
+                    <PasswordField fx:id="txtPassword" promptText="Nhập password"
+                                   style="-fx-font-size: 14; -fx-padding: 10;" />
+                </VBox>
+
+                <!-- Remember Me -->
+                <CheckBox fx:id="chkRememberMe" text="Ghi nhớ đăng nhập"
+                          style="-fx-font-size: 12;" />
+
+                <!-- Error Label -->
+                <Label fx:id="lblError" text=""
+                       style="-fx-text-fill: red; -fx-font-size: 12;"
+                       wrapText="true" />
+
+                <!-- Buttons -->
+                <HBox spacing="10" alignment="CENTER">
+                    <Button fx:id="btnLogin" text="Đăng nhập" onAction="#handleLogin"
+                            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;"
+                            prefWidth="150" prefHeight="40" />
+                    <Button text="Thoát" onAction="#handleCancel"
+                            style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;"
+                            prefWidth="100" prefHeight="40" />
+                </HBox>
+            </VBox>
+
+            <!-- Footer Info -->
+            <VBox alignment="CENTER" spacing="5">
+                <Label text="Tài khoản mẫu:" style="-fx-font-size: 11; -fx-text-fill: #666; -fx-font-weight: bold;" />
+                <Label text="Admin: admin / admin123" style="-fx-font-size: 10; -fx-text-fill: #888;" />
+                <Label text="Librarian: librarian / lib123" style="-fx-font-size: 10; -fx-text-fill: #888;" />
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
