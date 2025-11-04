@@ -71,18 +71,14 @@ public class LoginController {
 
     private void loadDashboard(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dashboard.fxml"));
-            Parent root = loader.load();
-
-            // Truyền user info đến Dashboard
-            DashboardController controller = loader.getController();
-            controller.initData(user);
-
-            Scene scene = new Scene(root);
+            // Tạo MainApp mới và hiển thị
             Stage stage = (Stage) btnLogin.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Library Management System - " + user.getRole().toUpperCase());
-            stage.show();
+
+            src.MainApp mainApp = new src.MainApp();
+            mainApp.setPrimaryStage(stage);
+            mainApp.showMainApp(user);
+
+            System.out.println("✅ Đăng nhập thành công: " + user.getUsername() + " (" + user.getRole() + ")");
 
         } catch (Exception e) {
             showError("Không thể load dashboard!");

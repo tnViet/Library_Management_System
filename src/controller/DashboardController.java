@@ -45,11 +45,11 @@ public class DashboardController {
 
         if (SessionManager.getInstance().isAdmin()) {
             // Admin có quyền truy cập tất cả
-            MenuItem menuUsers = new MenuItem("Quản lý Users");
-            MenuItem menuBooks = new MenuItem("Quản lý Sách");
-            MenuItem menuMembers = new MenuItem("Quản lý Thành viên");
-            MenuItem menuLoans = new MenuItem("Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("Quản lý Phạt");
+            MenuItem menuUsers = new MenuItem("👥 Quản lý Users");
+            MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
+            MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
+            MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
+            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuUsers.setOnAction(e -> showUsers());
             menuBooks.setOnAction(e -> showBooks());
@@ -61,10 +61,10 @@ public class DashboardController {
                     menuBooks, menuMembers, menuLoans, menuFines);
         } else if (SessionManager.getInstance().isLibrarian()) {
             // Librarian không có quyền quản lý users
-            MenuItem menuBooks = new MenuItem("Quản lý Sách");
-            MenuItem menuMembers = new MenuItem("Quản lý Thành viên");
-            MenuItem menuLoans = new MenuItem("Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("Quản lý Phạt");
+            MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
+            MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
+            MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
+            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
@@ -73,16 +73,17 @@ public class DashboardController {
 
             menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans, menuFines);
         } else {
-            // Member chỉ xem thông tin cá nhân và sách đang mượn
-            MenuItem menuMyLoans = new MenuItem("Sách đang mượn");
-            MenuItem menuMyFines = new MenuItem("Phạt của tôi");
+            // Member chỉ xem sách có sẵn và sách đang mượn
+            MenuItem menuViewBooks = new MenuItem("📚 Xem danh sách sách");
+            MenuItem menuMyLoans = new MenuItem("📖 Sách đang mượn của tôi");
 
+            menuViewBooks.setOnAction(e -> showMemberBooks());
             menuMyLoans.setOnAction(e -> showMyLoans());
-            menuMyFines.setOnAction(e -> showMyFines());
 
-            menuManage.getItems().addAll(menuMyLoans, menuMyFines);
+            menuManage.getItems().addAll(menuViewBooks, menuMyLoans);
         }
     }
+
 
     private void showHomePage() {
         VBox homePage = new VBox(20);
@@ -112,6 +113,11 @@ public class DashboardController {
     @FXML
     private void showLoans() {
         loadView("/view/Loan.fxml");
+    }
+
+    @FXML
+    private void showMemberBooks() {
+        loadView("/view/MemberBookView.fxml");
     }
 
     @FXML
