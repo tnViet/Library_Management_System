@@ -47,9 +47,7 @@
                                    style="-fx-font-size: 14; -fx-padding: 10;" />
                 </VBox>
 
-                <!-- Remember Me -->
-                <CheckBox fx:id="chkRememberMe" text="Ghi nhớ đăng nhập"
-                          style="-fx-font-size: 12;" />
+               
 
                 <!-- Error Label -->
                 <Label fx:id="lblError" text=""

@@ -71,7 +71,6 @@ public class LoginController {
 
     private void loadDashboard(User user) {
         try {
-            // Tạo MainApp mới và hiển thị
             Stage stage = (Stage) btnLogin.getScene().getWindow();
 
             src.MainApp mainApp = new src.MainApp();
