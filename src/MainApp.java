@@ -103,13 +103,11 @@ public class MainApp extends Application {
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
             MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
             MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
-//            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuUsers.setOnAction(e -> showUsers());
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
-//            menuFines.setOnAction(e -> showFines());
 
             menuManage.getItems().addAll(menuUsers, new SeparatorMenuItem(),
                     menuBooks, menuMembers, menuLoans);
