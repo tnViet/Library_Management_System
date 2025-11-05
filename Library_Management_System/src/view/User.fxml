@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.UserController" prefHeight="600.0" prefWidth="900.0">
+
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header" style="-fx-background-color: #2196F3; -fx-padding: 15;">
+            <Label text="QUẢN LÝ USERS (ADMIN ONLY)" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <!-- Center: Form và Table -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+
+            <!-- Form nhập liệu -->
+            <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-background-radius: 5;">
+                <Label text="Thông tin user" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100" prefWidth="120" />
+                        <ColumnConstraints minWidth="200" prefWidth="250" />
+                        <ColumnConstraints minWidth="100" prefWidth="120" />
+                        <ColumnConstraints minWidth="200" prefWidth="250" />
+                    </columnConstraints>
+
+                    <!-- Row 1 -->
+                    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtUsername" promptText="Nhập username"
+                               GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Password:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <PasswordField fx:id="txtPassword" promptText="Nhập password (min 6 ký tự)"
+                                   GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <!-- Row 2 -->
+                    <Label text="Role:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cmbRole" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              prefWidth="250" />
+                </GridPane>
+
+                <!-- Buttons -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="btnAdd" text="Thêm" onAction="#handleAdd"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnUpdate" text="Cập nhật" onAction="#handleUpdate"
+                            style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnResetPassword" text="Reset Password" onAction="#handleResetPassword"
+                            style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="130" />
+                    <Button fx:id="btnDelete" text="Xóa" onAction="#handleDelete"
+                            style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                    <Button fx:id="btnClear" text="Làm mới" onAction="#handleClear"
+                            style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"
+                            prefWidth="100" />
+                </HBox>
+            </VBox>
+
+            <!-- Search box -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
+                <Label text="Tìm theo username:" />
+                <TextField fx:id="txtSearch" promptText="Nhập username" prefWidth="300" />
+                <Button text="Tìm kiếm" onAction="#handleSearch"
+                        style="-fx-background-color: #FF9800; -fx-text-fill: white;" />
+            </HBox>
+
+            <!-- Table -->
+            <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="80" />
+                    <TableColumn fx:id="colUsername" text="Username" prefWidth="300" />
+                    <TableColumn fx:id="colRole" text="Role" prefWidth="200" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Status bar -->
+    <bottom>
+        <HBox style="-fx-background-color: #eeeeee; -fx-padding: 10;">
+            <Label text="⚠️ Admin only - Quản lý tài khoản người dùng" style="-fx-text-fill: red; -fx-font-weight: bold;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

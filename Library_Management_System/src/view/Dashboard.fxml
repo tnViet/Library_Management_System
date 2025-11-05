@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainLayout" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.DashboardController" prefHeight="700.0" prefWidth="1000.0">
+
+    <!-- Top: MenuBar và User Info -->
+    <top>
+        <VBox>
+            <!-- MenuBar -->
+            <MenuBar fx:id="menuBar">
+                <Menu text="Hệ thống" fx:id="menuSystem">
+                    <MenuItem text="Trang chủ" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Đổi mật khẩu" />
+                    <MenuItem text="Cài đặt" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Đăng xuất" onAction="#handleLogout" />
+                    <MenuItem text="Thoát" />
+                </Menu>
+
+                <Menu text="Quản lý" fx:id="menuManage">
+                    <!-- Menu items sẽ được thêm động theo role -->
+                </Menu>
+
+                <Menu text="Báo cáo">
+                    <MenuItem text="Thống kê sách" />
+                    <MenuItem text="Thống kê mượn trả" />
+                </Menu>
+
+                <Menu text="Trợ giúp">
+                    <MenuItem text="Hướng dẫn sử dụng" />
+                    <MenuItem text="Về phần mềm" />
+                </Menu>
+            </MenuBar>
+
+            <!-- User Info Bar -->
+            <HBox style="-fx-background-color: #2196F3; -fx-padding: 10;" spacing="20">
+                <HBox spacing="10" HBox.hgrow="ALWAYS">
+                    <Label text="👤" style="-fx-text-fill: white; -fx-font-size: 14;" />
+                    <Label fx:id="lblUsername" text="Username" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14;" />
+                    <Label text="|" style="-fx-text-fill: white;" />
+                    <Label fx:id="lblRole" text="Role" style="-fx-text-fill: white; -fx-font-size: 14;" />
+                </HBox>
+                <Button text="Đăng xuất" onAction="#handleLogout"
+                        style="-fx-background-color: white; -fx-text-fill: #2196F3; -fx-font-weight: bold;" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center: Dynamic Content -->
+    <center>
+        <!-- Content sẽ được load động ở đây -->
+    </center>
+
+    <!-- Bottom: Status Bar -->
+    <bottom>
+        <HBox style="-fx-background-color: #eeeeee; -fx-padding: 10;" spacing="20">
+            <Label text="📚 Library Management System v1.0" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="© 2024 - Developed by Your Team" style="-fx-text-fill: #666;" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
