@@ -121,12 +121,24 @@ public class UserController implements Initializable {
                         cmbRole.getValue()
                 );
 
-                userDAO.addUser(user);
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Thêm user thành công!");
-                loadUsers();
-                clearFields();
+                // **Transaction tự động tạo member nếu role = "member"**
+                boolean success = userDAO.addUser(user);
+
+                if (success) {
+                    String message = "Thêm user thành công!";
+                    if ("member".equalsIgnoreCase(cmbRole.getValue())) {
+                        message += "\nĐã tự động tạo thông tin member.";
+                    }
+                    showAlert(Alert.AlertType.INFORMATION, "Thành công", message);
+                    loadUsers();
+                    clearFields();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể thêm user!");
+                }
+
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể thêm user: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -180,7 +192,12 @@ public class UserController implements Initializable {
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmAlert.setTitle("Xác nhận");
         confirmAlert.setHeaderText("Xóa user");
-        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa user: " + selectedUser.getUsername() + "?");
+
+        String message = "Bạn có chắc chắn muốn xóa user: " + selectedUser.getUsername() + "?";
+        if ("member".equalsIgnoreCase(selectedUser.getRole())) {
+            message += "\n\nLưu ý: Thông tin member liên kết cũng sẽ bị xóa (CASCADE)!";
+        }
+        confirmAlert.setContentText(message);
 
         Optional<ButtonType> result = confirmAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -210,8 +227,14 @@ public class UserController implements Initializable {
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent() && !result.get().trim().isEmpty()) {
+            String newPassword = result.get();
+            if (newPassword.length() < 6) {
+                showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Password phải có ít nhất 6 ký tự!");
+                return;
+            }
+
             try {
-                userDAO.resetPassword(selectedUser.getId(), result.get());
+                userDAO.resetPassword(selectedUser.getId(), newPassword);
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Reset password thành công!");
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể reset password: " + e.getMessage());
@@ -240,6 +263,10 @@ public class UserController implements Initializable {
                 userList.add(user);
             }
             userTable.setItems(userList);
+
+            if (userList.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Không tìm thấy user!");
+            }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tìm kiếm: " + e.getMessage());
         }
@@ -248,14 +275,21 @@ public class UserController implements Initializable {
     private boolean validateInput() {
         if (txtUsername.getText().trim().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng nhập username!");
+            txtUsername.requestFocus();
             return false;
         }
         if (txtPassword.getText().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng nhập password!");
+            txtPassword.requestFocus();
             return false;
         }
         if (txtPassword.getText().length() < 6) {
             showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Password phải có ít nhất 6 ký tự!");
+            txtPassword.requestFocus();
+            return false;
+        }
+        if (cmbRole.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Vui lòng chọn role!");
             return false;
         }
         return true;
@@ -265,6 +299,7 @@ public class UserController implements Initializable {
         txtUsername.clear();
         txtPassword.clear();
         cmbRole.setValue("member");
+        txtSearch.clear();
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {

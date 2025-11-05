@@ -123,7 +123,6 @@ public class LoanDAO {
             return affectedRows > 0;
         }
     }
-
     // Trả sách (cập nhật return_date và returned = true)
     public boolean returnBook(int loanId) throws SQLException {
         String query = "UPDATE loans SET return_date = ?, returned = TRUE WHERE id = ?";

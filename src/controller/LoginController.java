@@ -77,7 +77,7 @@ public class LoginController {
             mainApp.setPrimaryStage(stage);
             mainApp.showMainApp(user);
 
-//            System.out.println("✅ Đăng nhập thành công: " + user.getUsername() + " (" + user.getRole() + ")");
+            System.out.println("✅ Đăng nhập thành công: " + user.getUsername() + " (" + user.getRole() + ")");
 
         } catch (Exception e) {
             showError("Không thể load dashboard!");
@@ -98,14 +98,6 @@ public class LoginController {
                 e.printStackTrace();
             }
         }).start();
-    }
-    @FXML
-    private void openLink() {
-        try {
-            java.awt.Desktop.getDesktop().browse(new java.net.URI("http://localhost/phpmyadmin/index.php?route=/sql&pos=0&db=library_db&table=users"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML

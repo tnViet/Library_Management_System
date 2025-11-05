@@ -38,7 +38,7 @@ public class MemberLoanViewController implements Initializable {
     private BookDAO bookDAO;
     private MemberDAO memberDAO;
     private ObservableList<LoanDisplay> loanList;
-    private int currentMemberId;
+    private int currentMemberId = -1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,15 +47,23 @@ public class MemberLoanViewController implements Initializable {
         memberDAO = new MemberDAO();
         loanList = FXCollections.observableArrayList();
 
-        // Lấy member ID từ username (giả sử username = email trong members)
+        // **SỬA: Lấy member_id từ user_id hiện tại**
         try {
-            String username = SessionManager.getInstance().getCurrentUsername();
-            // Tạm thời dùng member ID = 1, bạn cần mapping username -> member
-            currentMemberId = 1; // TODO: Lấy member ID từ username
+            int currentUserId = SessionManager.getInstance().getCurrentUserId();
+            Member member = memberDAO.getMemberByUserId(currentUserId);
 
-            lblWelcome.setText("Sách đang mượn của: " + username);
-        } catch (Exception e) {
-            currentMemberId = 1;
+            if (member != null) {
+                currentMemberId = member.getId();
+                lblWelcome.setText("Sách đang mượn của: " + member.getName());
+            } else {
+                lblWelcome.setText("Không tìm thấy thông tin thành viên!");
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Bạn chưa được đăng ký là thành viên thư viện!");
+                return;
+            }
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể lấy thông tin member: " + e.getMessage());
+            e.printStackTrace();
+            return;
         }
 
         // Thiết lập các cột
@@ -109,6 +117,11 @@ public class MemberLoanViewController implements Initializable {
     }
 
     private void loadMyLoans() {
+        if (currentMemberId == -1) {
+            showAlert(Alert.AlertType.WARNING, "Cảnh báo", "Không tìm thấy thông tin member!");
+            return;
+        }
+
         try {
             loanList.clear();
             var loans = loanDAO.getUnreturnedLoansByMemberId(currentMemberId);
