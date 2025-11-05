@@ -16,18 +16,13 @@
 5. Mysql connect: https://downloads.mysql.com/archives/c-j/
 ## 📂 Cấu trúc thư mục
 
-'''
 src/
- ├─ controller/   # Controller
- 
- ├─ dao/          # Data Access Object
- 
- ├─ model/        # Model
- 
- ├─ util/         # Tiện ích
 
-MainApp.java
-'''
+    ├─ controller/   # Controller
+    ├─ dao/          # Data Access Object
+    ├─ model/        # Model
+    ├─ util/         # Tiện ích
+      MainApp.java
 
 
 ## Sử dụng
