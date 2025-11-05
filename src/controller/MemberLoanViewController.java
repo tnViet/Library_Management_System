@@ -87,7 +87,6 @@ public class MemberLoanViewController implements Initializable {
             }
         });
 
-        // Custom cell factory cho Days Left
         colDaysLeft.setCellFactory(column -> new TableCell<LoanDisplay, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {

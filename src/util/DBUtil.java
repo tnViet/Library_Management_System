@@ -44,51 +44,5 @@ public class DBUtil {
         }
     }
 
-    /**
-     * Lấy Singleton connection (chỉ tạo 1 lần)
-     * @return Connection object
-     * @throws SQLException
-     */
-    public static Connection getSingletonConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = getConnection();
-        }
-        return connection;
-    }
 
-    /**
-     * Đóng kết nối
-     * @param conn Connection cần đóng
-     */
-    public static void closeConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-                System.out.println("Đã đóng kết nối database!");
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Test kết nối database
-     */
-    public static void testConnection() {
-        try (Connection conn = getConnection()) {
-            if (conn != null && !conn.isClosed()) {
-                System.out.println("✅ Test kết nối thành công!");
-                System.out.println("📊 Database: " + conn.getCatalog());
-                System.out.println("🔗 URL: " + conn.getMetaData().getURL());
-            }
-        } catch (SQLException e) {
-            System.err.println("❌ Test kết nối thất bại!");
-            e.printStackTrace();
-        }
-    }
-
-    // Main method để test
-    public static void main(String[] args) {
-        testConnection();
-    }
 }
