@@ -21,7 +21,7 @@ src/
  ├── dao/          → Các lớp truy cập DB
  ├── model/        → Các model
  ├── util/         → Các tiện ích
- ├── MainApp.java
+MainApp.java
 
 
 ## Sử dụng
