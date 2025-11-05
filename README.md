@@ -11,17 +11,18 @@
 3. Xampp: https://www.apachefriends.org/download.html
 4. Clone dự án:
    ```bash
-   git clone https://github.com/ttviet/project.git
+   git clone https://github.com/ttViet/project.git
 
 5. Mysql connect: https://downloads.mysql.com/archives/c-j/
 ## 📂 Cấu trúc thư mục
-
+maskdown'''
 src/
- ├── controller/   → Các Controller
- ├── dao/          → Các lớp truy cập DB
- ├── model/        → Các model
- ├── util/         → Các tiện ích
-MainApp.java
+ ├─ controller/   # Controller
+ ├─ dao/          # Data Access Object
+ ├─ model/        # Model
+ ├─ util/         # Tiện ích
+MainApp.java/        # FXML, CSS, hình ảnh
+
 
 
 ## Sử dụng
