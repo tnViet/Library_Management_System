@@ -11,7 +11,7 @@
 3. Xampp: https://www.apachefriends.org/download.html
 4. Clone dự án:
    ```bash
-   git clone https://github.com/username/project.git
+   git clone https://github.com/ttviet/project.git
 
 5. Mysql connect: https://downloads.mysql.com/archives/c-j/
 ## 📂 Cấu trúc thư mục
