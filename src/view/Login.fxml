@@ -64,13 +64,6 @@
                             prefWidth="100" prefHeight="40" />
                 </HBox>
             </VBox>
-
-            <!-- Footer Info -->
-            <VBox alignment="CENTER" spacing="5">
-                <Label text="Tài khoản mẫu:" style="-fx-font-size: 11; -fx-text-fill: #666; -fx-font-weight: bold;" />
-                <Label text="Admin: admin / admin123" style="-fx-font-size: 10; -fx-text-fill: #888;" />
-                <Label text="Librarian: librarian / lib123" style="-fx-font-size: 10; -fx-text-fill: #888;" />
-            </VBox>
         </VBox>
     </center>
 

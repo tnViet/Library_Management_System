@@ -34,8 +34,9 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 800, 900);
+            Scene scene = new Scene(root, 600, 700);
             primaryStage.setScene(scene);
+            primaryStage.centerOnScreen();
             primaryStage.setTitle("Library Management System - Đăng nhập");
             primaryStage.sizeToScene();
             primaryStage.setResizable(false);
@@ -54,6 +55,7 @@ public class MainApp extends Application {
         this.currentUser = user;
 
         primaryStage.setTitle("Library Management System - " + user.getRole().toUpperCase());
+        primaryStage.centerOnScreen();
         primaryStage.setResizable(true);
 
         initRootLayout();
@@ -92,6 +94,7 @@ public class MainApp extends Application {
         // Tạo Scene
         Scene scene = new Scene(mainLayout, 1000, 700);
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
@@ -116,13 +119,12 @@ public class MainApp extends Application {
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
             MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
             MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
 
-            menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans, menuFines);
+            menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans);
         } else {
             // Member chỉ xem
             MenuItem menuViewBooks = new MenuItem("📚 Xem danh sách sách");
@@ -178,9 +180,8 @@ public class MainApp extends Application {
             Button btnBooks = new Button("📚 Quản lý Sách");
             Button btnMembers = new Button("👤 Quản lý Thành viên");
             Button btnLoans = new Button("📖 Quản lý Mượn sách");
-            Button btnFines = new Button("💰 Quản lý Phạt");
 
-            for (Button b : new Button[]{btnUsers, btnBooks, btnMembers, btnLoans, btnFines}) {
+            for (Button b : new Button[]{btnUsers, btnBooks, btnMembers, btnLoans}) {
                 b.setStyle(baseButton);
                 b.setOnMouseEntered(e -> b.setStyle(baseButton + "-fx-background-color: #357ABD;"));
                 b.setOnMouseExited(e -> b.setStyle(baseButton));
