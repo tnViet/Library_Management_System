@@ -13,23 +13,23 @@
    ```bash
    git clone https://github.com/username/project.git
 
----
 
-## Cấu trúc thư mục (tuỳ chọn)
-```markdown
-## Cấu trúc thư mục
-- src/
-  - controller/  --> các Controller
-  - dao/         --> các lớp truy cập DB
-  - model/       --> các model
-  - util/        --> các tiện ích
-- resources/     --> FXML, CSS, hình ảnh
+## 📂 Cấu trúc thư mục
+
+src/
+ ├── controller/   → Các Controller
+ ├── dao/          → Các lớp truy cập DB
+ ├── model/        → Các model
+ ├── util/         → Các tiện ích
+ ├── MainApp.java
+
+
 ## Sử dụng
 - Đăng nhập với tài khoản admin
 - Thêm, sửa, xoá sách
 - Quản lý thành viên
 - Xem bảng mượn trả sách
-## Ảnh
+## Ảnh login
 <img width="790" height="923" alt="image" src="https://github.com/user-attachments/assets/59af62f1-7e6a-4a40-9e91-11a34773c2e9" />
 # Quyền admin
 <img width="993" height="720" alt="image" src="https://github.com/user-attachments/assets/4a251159-5bed-4652-b55f-dbfb43c987be" />
