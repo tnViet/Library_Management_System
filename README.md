@@ -6,14 +6,14 @@
 - Mượn/trả sách
 - Hiển thị lịch sử mượn sách
 ## Cài đặt
-1. Cài Java 17+
+1. Cài Java 23+, javafx 23
 2. Cài MySQL và tạo database
 3. Xampp: https://www.apachefriends.org/download.html
 4. Clone dự án:
    ```bash
    git clone https://github.com/username/project.git
 
-
+5. Mysql connect: https://downloads.mysql.com/archives/c-j/
 ## 📂 Cấu trúc thư mục
 
 src/
