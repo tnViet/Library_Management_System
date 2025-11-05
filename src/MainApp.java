@@ -22,7 +22,6 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Library Management System");
 
-        // Hiển thị màn hình đăng nhập trước
         showLogin();
     }
     public void setPrimaryStage(Stage stage) {
@@ -44,74 +43,11 @@ public class MainApp extends Application {
 
 
         } catch (Exception e) {
-            System.err.println("❌ Lỗi khi load Login: " + e.getMessage());
             e.printStackTrace();
-            showSimpleLogin(); // Fallback
         }
     }
 
-    // Login đơn giản bằng code (backup nếu không có FXML)
-    private void showSimpleLogin() {
-        VBox loginBox = new VBox(15);
-        loginBox.setStyle("-fx-padding: 40; -fx-alignment: center; -fx-background-color: #f5f5f5;");
 
-        Label title = new Label("🔐 ĐĂNG NHẬP");
-        title.setStyle("-fx-font-size: 24; -fx-font-weight: bold;");
-
-        Label lblUsername = new Label("Username:");
-        TextField txtUsername = new TextField();
-        txtUsername.setPromptText("admin");
-        txtUsername.setStyle("-fx-font-size: 14; -fx-padding: 10;");
-        txtUsername.setMaxWidth(300);
-
-        Label lblPassword = new Label("Password:");
-        PasswordField txtPassword = new PasswordField();
-        txtPassword.setPromptText("admin123");
-        txtPassword.setStyle("-fx-font-size: 14; -fx-padding: 10;");
-        txtPassword.setMaxWidth(300);
-
-        Label lblError = new Label();
-        lblError.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
-
-        Button btnLogin = new Button("Đăng nhập");
-        btnLogin.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 10 40;");
-
-        btnLogin.setOnAction(e -> {
-            String username = txtUsername.getText().trim();
-            String password = txtPassword.getText();
-
-            if (username.isEmpty() || password.isEmpty()) {
-                lblError.setText("Vui lòng nhập đầy đủ thông tin!");
-                return;
-            }
-
-            try {
-                dao.UserDAO userDAO = new dao.UserDAO();
-                model.User user = userDAO.authenticate(username, password);
-
-                if (user != null) {
-                    util.SessionManager.getInstance().setCurrentUser(user);
-                    showMainApp(user);
-                } else {
-                    lblError.setText("Username hoặc password không đúng!");
-                    txtPassword.clear();
-                }
-            } catch (Exception ex) {
-                lblError.setText("Lỗi kết nối database: " + ex.getMessage());
-                ex.printStackTrace();
-            }
-        });
-
-
-        loginBox.getChildren().addAll(title, lblUsername, txtUsername, lblPassword, txtPassword, lblError, btnLogin);
-
-        Scene scene = new Scene(loginBox, 400, 500);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Library Management System - Đăng nhập");
-        primaryStage.setResizable(false);
-        primaryStage.show();
-
-    }
 
     // Hiển thị Dashboard sau khi đăng nhập thành công
     public void showMainApp(User user) {
@@ -272,7 +208,6 @@ public class MainApp extends Application {
             btnBooks.setOnAction(e -> showBooks());
             btnMembers.setOnAction(e -> showMembers());
             btnLoans.setOnAction(e -> showLoans());
-//            btnFines.setOnAction(e -> showFines());
 
             buttons.getChildren().addAll(btnBooks, btnMembers, btnLoans);
 

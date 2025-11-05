@@ -28,23 +28,6 @@ public class UserDAO {
         return users;
     }
 
-    // Lấy user theo ID
-    public User getUserById(int id) throws SQLException {
-        String query = "SELECT * FROM users WHERE id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, id);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return extractUserFromResultSet(rs);
-                }
-            }
-        }
-        return null;
-    }
 
     // Lấy user theo username
     public User getUserByUsername(String username) throws SQLException {
@@ -64,25 +47,6 @@ public class UserDAO {
         return null;
     }
 
-    // Lấy users theo role
-    public List<User> getUsersByRole(String role) throws SQLException {
-        List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM users WHERE role = ? ORDER BY username";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, role);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    User user = extractUserFromResultSet(rs);
-                    users.add(user);
-                }
-            }
-        }
-        return users;
-    }
 
     // Xác thực đăng nhập
     public User authenticate(String username, String password) throws SQLException {
@@ -144,34 +108,6 @@ public class UserDAO {
         }
     }
 
-    // Đổi mật khẩu
-    public boolean changePassword(int userId, String oldPassword, String newPassword) throws SQLException {
-        // Kiểm tra mật khẩu cũ
-        String checkQuery = "SELECT * FROM users WHERE id = ? AND password = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
-
-            checkStmt.setInt(1, userId);
-            checkStmt.setString(2, hashPassword(oldPassword));
-
-            ResultSet rs = checkStmt.executeQuery();
-
-            if (!rs.next()) {
-                return false; // Mật khẩu cũ không đúng
-            }
-
-            // Cập nhật mật khẩu mới
-            String updateQuery = "UPDATE users SET password = ? WHERE id = ?";
-            try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
-                updateStmt.setString(1, hashPassword(newPassword));
-                updateStmt.setInt(2, userId);
-
-                int affectedRows = updateStmt.executeUpdate();
-                return affectedRows > 0;
-            }
-        }
-    }
 
     // Reset mật khẩu (cho admin)
     public boolean resetPassword(int userId, String newPassword) throws SQLException {
@@ -219,56 +155,8 @@ public class UserDAO {
         return false;
     }
 
-    // Đếm tổng số users
-    public int getTotalUsersCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM users";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
 
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm số users theo role
-    public int getUsersCountByRole(String role) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM users WHERE role = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, role);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count");
-                }
-            }
-        }
-        return 0;
-    }
-
-    // Kiểm tra user có quyền admin không
-    public boolean isAdmin(int userId) throws SQLException {
-        String query = "SELECT role FROM users WHERE id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, userId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return "admin".equalsIgnoreCase(rs.getString("role"));
-                }
-            }
-        }
-        return false;
-    }
 
     // Hash password bằng SHA-256
     private String hashPassword(String password) {

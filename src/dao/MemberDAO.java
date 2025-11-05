@@ -44,23 +44,6 @@ public class MemberDAO {
         return null;
     }
 
-    // Lấy thành viên theo email
-    public Member getMemberByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM members WHERE email = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, email);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return extractMemberFromResultSet(rs);
-                }
-            }
-        }
-        return null;
-    }
 
     // Tìm kiếm thành viên (theo name, email, phone)
     public List<Member> searchMembers(String keyword) throws SQLException {
@@ -85,45 +68,7 @@ public class MemberDAO {
         return members;
     }
 
-    // Lấy thành viên có phiếu mượn đang hoạt động
-    public List<Member> getMembersWithActiveLoans() throws SQLException {
-        List<Member> members = new ArrayList<>();
-        String query = "SELECT DISTINCT m.* FROM members m " +
-                "INNER JOIN loans l ON m.id = l.member_id " +
-                "WHERE l.returned = FALSE " +
-                "ORDER BY m.name";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Member member = extractMemberFromResultSet(rs);
-                members.add(member);
-            }
-        }
-        return members;
-    }
-
-    // Lấy thành viên có phiếu mượn quá hạn
-    public List<Member> getMembersWithOverdueLoans() throws SQLException {
-        List<Member> members = new ArrayList<>();
-        String query = "SELECT DISTINCT m.* FROM members m " +
-                "INNER JOIN loans l ON m.id = l.member_id " +
-                "WHERE l.returned = FALSE AND l.due_date < CURDATE() " +
-                "ORDER BY m.name";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Member member = extractMemberFromResultSet(rs);
-                members.add(member);
-            }
-        }
-        return members;
-    }
 
     // Thêm thành viên mới
     public boolean addMember(Member member) throws SQLException {
@@ -201,150 +146,10 @@ public class MemberDAO {
         return false;
     }
 
-    // Kiểm tra số điện thoại đã tồn tại chưa
-    public boolean isPhoneExists(String phone) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM members WHERE phone = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, phone);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count") > 0;
-                }
-            }
-        }
-        return false;
-    }
 
-    // Đếm tổng số thành viên
-    public int getTotalMembersCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM members";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm số thành viên đang mượn sách
-    public int getActiveMembersCount() throws SQLException {
-        String query = "SELECT COUNT(DISTINCT member_id) as count FROM loans WHERE returned = FALSE";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm số sách thành viên đang mượn
-    public int getMemberActiveLoanCount(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND returned = FALSE";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count");
-                }
-            }
-        }
-        return 0;
-    }
-
-    // Đếm tổng số sách thành viên đã mượn (bao gồm cả đã trả)
-    public int getMemberTotalLoanCount(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count");
-                }
-            }
-        }
-        return 0;
-    }
-
-    // Kiểm tra thành viên có phiếu mượn đang hoạt động không
-    public boolean hasActiveLoans(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND returned = FALSE";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count") > 0;
-                }
-            }
-        }
-        return false;
-    }
-
-    // Kiểm tra thành viên có phiếu mượn quá hạn không
-    public boolean hasOverdueLoans(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND returned = FALSE AND due_date < CURDATE()";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count") > 0;
-                }
-            }
-        }
-        return false;
-    }
-
-    // Lấy top thành viên mượn nhiều sách nhất
-    public List<Member> getTopBorrowers(int limit) throws SQLException {
-        List<Member> members = new ArrayList<>();
-        String query = "SELECT m.*, COUNT(l.id) as loan_count " +
-                "FROM members m " +
-                "LEFT JOIN loans l ON m.id = l.member_id " +
-                "GROUP BY m.id " +
-                "ORDER BY loan_count DESC " +
-                "LIMIT ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, limit);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Member member = extractMemberFromResultSet(rs);
-                    members.add(member);
-                }
-            }
-        }
-        return members;
-    }
 
     // Helper method: Trích xuất Member từ ResultSet
     private Member extractMemberFromResultSet(ResultSet rs) throws SQLException {

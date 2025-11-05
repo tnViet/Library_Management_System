@@ -27,23 +27,6 @@ public class LoanDAO {
         return loans;
     }
 
-    // Lấy phiếu mượn theo ID
-    public Loan getLoanById(int id) throws SQLException {
-        String query = "SELECT * FROM loans WHERE id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, id);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return extractLoanFromResultSet(rs);
-                }
-            }
-        }
-        return null;
-    }
 
     // Lấy phiếu mượn theo Member ID
     public List<Loan> getLoansByMemberId(int memberId) throws SQLException {
@@ -65,76 +48,8 @@ public class LoanDAO {
         return loans;
     }
 
-    // Lấy phiếu mượn theo Book ID
-    public List<Loan> getLoansByBookId(int bookId) throws SQLException {
-        List<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans WHERE book_id = ? ORDER BY loan_date DESC";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setInt(1, bookId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Loan loan = extractLoanFromResultSet(rs);
-                    loans.add(loan);
-                }
-            }
-        }
-        return loans;
-    }
-
-    // Lấy phiếu mượn chưa trả
-    public List<Loan> getUnreturnedLoans() throws SQLException {
-        List<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans WHERE returned = FALSE ORDER BY due_date";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Loan loan = extractLoanFromResultSet(rs);
-                loans.add(loan);
-            }
-        }
-        return loans;
-    }
-
-    // Lấy phiếu mượn đã trả
-    public List<Loan> getReturnedLoans() throws SQLException {
-        List<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans WHERE returned = TRUE ORDER BY return_date DESC";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Loan loan = extractLoanFromResultSet(rs);
-                loans.add(loan);
-            }
-        }
-        return loans;
-    }
-
-    // Lấy phiếu mượn quá hạn
-    public List<Loan> getOverdueLoans() throws SQLException {
-        List<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans WHERE returned = FALSE AND due_date < CURDATE() ORDER BY due_date";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Loan loan = extractLoanFromResultSet(rs);
-                loans.add(loan);
-            }
-        }
-        return loans;
-    }
 
     // Lấy phiếu mượn chưa trả của member
     public List<Loan> getUnreturnedLoansByMemberId(int memberId) throws SQLException {
@@ -224,20 +139,6 @@ public class LoanDAO {
         }
     }
 
-    // Gia hạn sách (cập nhật due_date)
-    public boolean extendLoan(int loanId, int days) throws SQLException {
-        String query = "UPDATE loans SET due_date = DATE_ADD(due_date, INTERVAL ? DAY) WHERE id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, days);
-            pstmt.setInt(2, loanId);
-
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
-        }
-    }
 
     // Xóa phiếu mượn
     public boolean deleteLoan(int id) throws SQLException {
@@ -252,86 +153,9 @@ public class LoanDAO {
         }
     }
 
-    // Đếm tổng số phiếu mượn
-    public int getTotalLoansCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
 
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
 
-    // Đếm số phiếu mượn chưa trả
-    public int getUnreturnedLoansCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE returned = FALSE";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm số phiếu mượn quá hạn
-    public int getOverdueLoansCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE returned = FALSE AND due_date < CURDATE()";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Kiểm tra member có phiếu mượn quá hạn không
-    public boolean hasOverdueLoans(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND returned = FALSE AND due_date < CURDATE()";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count") > 0;
-                }
-            }
-        }
-        return false;
-    }
-
-    // Kiểm tra member có thể mượn sách không (tối đa 5 cuốn chưa trả)
-    public boolean canBorrowBook(int memberId) throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM loans WHERE member_id = ? AND returned = FALSE";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, memberId);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("count") < 5; // Tối đa 5 cuốn
-                }
-            }
-        }
-        return true;
-    }
 
     // Helper method: Trích xuất Loan từ ResultSet
     private Loan extractLoanFromResultSet(ResultSet rs) throws SQLException {

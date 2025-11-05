@@ -49,29 +49,24 @@ public class DashboardController {
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
             MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
             MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuUsers.setOnAction(e -> showUsers());
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
-            menuFines.setOnAction(e -> showFines());
 
             menuManage.getItems().addAll(menuUsers, new SeparatorMenuItem(),
-                    menuBooks, menuMembers, menuLoans, menuFines);
+                    menuBooks, menuMembers, menuLoans);
         } else if (SessionManager.getInstance().isLibrarian()) {
-            // Librarian không có quyền quản lý users
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
             MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
             MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
-            menuFines.setOnAction(e -> showFines());
 
-            menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans, menuFines);
+            menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans);
         } else {
             // Member chỉ xem sách có sẵn và sách đang mượn
             MenuItem menuViewBooks = new MenuItem("📚 Xem danh sách sách");
@@ -120,10 +115,6 @@ public class DashboardController {
         loadView("/view/MemberBookView.fxml");
     }
 
-    @FXML
-    private void showFines() {
-        loadView("/view/Fine.fxml");
-    }
 
     @FXML
     private void showUsers() {
