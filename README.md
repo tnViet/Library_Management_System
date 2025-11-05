@@ -15,7 +15,7 @@
 
 ---
 
-## 4️⃣ Cấu trúc thư mục (tuỳ chọn)
+## Cấu trúc thư mục (tuỳ chọn)
 ```markdown
 ## Cấu trúc thư mục
 - src/
@@ -29,3 +29,12 @@
 - Thêm, sửa, xoá sách
 - Quản lý thành viên
 - Xem bảng mượn trả sách
+## Ảnh
+<img width="790" height="923" alt="image" src="https://github.com/user-attachments/assets/59af62f1-7e6a-4a40-9e91-11a34773c2e9" />
+# Quyền admin
+<img width="993" height="720" alt="image" src="https://github.com/user-attachments/assets/4a251159-5bed-4652-b55f-dbfb43c987be" />
+# Quyền thủ thư
+<img width="990" height="714" alt="image" src="https://github.com/user-attachments/assets/5564df83-1e34-4057-b4a6-a40bc3784410" />
+# Quyền người dùng
+<img width="994" height="724" alt="image" src="https://github.com/user-attachments/assets/8d471777-f00b-4e67-8598-0fb8fc1996d3" />
+
