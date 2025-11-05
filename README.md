@@ -22,6 +22,7 @@ src/
     ├─ dao/          # Data Access Object
     ├─ model/        # Model
     ├─ util/         # Tiện ích
+    ├─ view/
       MainApp.java
 
 
