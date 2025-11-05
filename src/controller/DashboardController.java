@@ -141,12 +141,6 @@ public class DashboardController {
         // TODO: Filter loans by current user
     }
 
-    @FXML
-    private void showMyFines() {
-        // Load view với filter theo user hiện tại
-        loadView("/view/Fine.fxml");
-        // TODO: Filter fines by current user
-    }
 
     @FXML
     private void handleLogout() {

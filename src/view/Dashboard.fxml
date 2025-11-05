@@ -30,7 +30,6 @@
                 <Menu text="Báo cáo">
                     <MenuItem text="Thống kê sách" />
                     <MenuItem text="Thống kê mượn trả" />
-                    <MenuItem text="Thống kê phạt" />
                 </Menu>
 
                 <Menu text="Trợ giúp">

@@ -104,22 +104,7 @@ public class BookDAO {
         return books;
     }
 
-    // Lấy sách hết hàng (available copies = 0)
-    public List<Book> getOutOfStockBooks() throws SQLException {
-        List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE available_copies = 0 ORDER BY title";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Book book = extractBookFromResultSet(rs);
-                books.add(book);
-            }
-        }
-        return books;
-    }
 
     // Thêm sách mới
     public boolean addBook(Book book) throws SQLException {
@@ -170,20 +155,6 @@ public class BookDAO {
         }
     }
 
-    // Cập nhật số lượng sách có sẵn (dùng khi mượn/trả sách)
-    public boolean updateAvailableCopies(int bookId, int newAvailableCount) throws SQLException {
-        String query = "UPDATE books SET available_copies = ? WHERE id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, newAvailableCount);
-            pstmt.setInt(2, bookId);
-
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
-        }
-    }
 
     // Giảm số lượng sách có sẵn (khi mượn sách)
     public boolean decreaseAvailableCopies(int bookId) throws SQLException {
@@ -224,50 +195,7 @@ public class BookDAO {
         }
     }
 
-    // Đếm tổng số sách
-    public int getTotalBooksCount() throws SQLException {
-        String query = "SELECT COUNT(*) as count FROM books";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("count");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm tổng số bản sách (tổng tất cả copies)
-    public int getTotalCopiesCount() throws SQLException {
-        String query = "SELECT SUM(total_copies) as total FROM books";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        }
-        return 0;
-    }
-
-    // Đếm số sách có sẵn
-    public int getAvailableCopiesCount() throws SQLException {
-        String query = "SELECT SUM(available_copies) as available FROM books";
-
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            if (rs.next()) {
-                return rs.getInt("available");
-            }
-        }
-        return 0;
-    }
 
     // Kiểm tra sách có sẵn để mượn không
     public boolean isBookAvailable(int bookId) throws SQLException {

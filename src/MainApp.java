@@ -167,16 +167,16 @@ public class MainApp extends Application {
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
             MenuItem menuMembers = new MenuItem("👤 Quản lý Thành viên");
             MenuItem menuLoans = new MenuItem("📖 Quản lý Mượn sách");
-            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
+//            MenuItem menuFines = new MenuItem("💰 Quản lý Phạt");
 
             menuUsers.setOnAction(e -> showUsers());
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
-            menuFines.setOnAction(e -> showFines());
+//            menuFines.setOnAction(e -> showFines());
 
             menuManage.getItems().addAll(menuUsers, new SeparatorMenuItem(),
-                    menuBooks, menuMembers, menuLoans, menuFines);
+                    menuBooks, menuMembers, menuLoans);
         } else if (SessionManager.getInstance().isLibrarian()) {
             // Librarian không có quyền quản lý users
             MenuItem menuBooks = new MenuItem("📚 Quản lý Sách");
@@ -187,7 +187,6 @@ public class MainApp extends Application {
             menuBooks.setOnAction(e -> showBooks());
             menuMembers.setOnAction(e -> showMembers());
             menuLoans.setOnAction(e -> showLoans());
-            menuFines.setOnAction(e -> showFines());
 
             menuManage.getItems().addAll(menuBooks, menuMembers, menuLoans, menuFines);
         } else {
@@ -257,17 +256,14 @@ public class MainApp extends Application {
             btnBooks.setOnAction(e -> showBooks());
             btnMembers.setOnAction(e -> showMembers());
             btnLoans.setOnAction(e -> showLoans());
-            btnFines.setOnAction(e -> showFines());
-
-            buttons.getChildren().addAll(btnUsers, btnBooks, btnMembers, btnLoans, btnFines);
+            buttons.getChildren().addAll(btnUsers, btnBooks, btnMembers, btnLoans);
 
         } else if (SessionManager.getInstance().isLibrarian()) {
             Button btnBooks = new Button("📚 Quản lý Sách");
             Button btnMembers = new Button("👤 Quản lý Thành viên");
             Button btnLoans = new Button("📖 Quản lý Mượn sách");
-            Button btnFines = new Button("💰 Quản lý Phạt");
 
-            for (Button b : new Button[]{btnBooks, btnMembers, btnLoans, btnFines}) {
+            for (Button b : new Button[]{btnBooks, btnMembers, btnLoans}) {
                 b.setStyle(baseButton);
                 b.setOnMouseEntered(e -> b.setStyle(baseButton + "-fx-background-color: #357ABD;"));
                 b.setOnMouseExited(e -> b.setStyle(baseButton));
@@ -276,9 +272,9 @@ public class MainApp extends Application {
             btnBooks.setOnAction(e -> showBooks());
             btnMembers.setOnAction(e -> showMembers());
             btnLoans.setOnAction(e -> showLoans());
-            btnFines.setOnAction(e -> showFines());
+//            btnFines.setOnAction(e -> showFines());
 
-            buttons.getChildren().addAll(btnBooks, btnMembers, btnLoans, btnFines);
+            buttons.getChildren().addAll(btnBooks, btnMembers, btnLoans);
 
         } else {
             Button btnViewBooks = new Button("📚 Xem danh sách sách");
@@ -339,11 +335,6 @@ public class MainApp extends Application {
     // Quản lý Mượn sách
     private void showLoans() {
         loadView("/view/Loan.fxml");
-    }
-
-    // Quản lý Phạt
-    private void showFines() {
-        loadView("/view/Fine.fxml");
     }
 
     // Member: Xem sách (chỉ sách còn)
