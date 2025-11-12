@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import java.lang.Integer?>
+<?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.UserController" prefHeight="600.0" prefWidth="900.0">
 

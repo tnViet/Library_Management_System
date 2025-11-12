@@ -46,6 +46,10 @@ public class LoanController implements Initializable {
     @FXML private Button btnDelete;
     @FXML private Button btnReturn;
     @FXML private Button btnClear;
+    @FXML private TableColumn<Loan, String> colMemberName;
+
+
+
 
     private LoanDAO loanDAO;
     private BookDAO bookDAO;
@@ -71,7 +75,7 @@ public class LoanController implements Initializable {
         colDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         colReturnDate.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
         colReturned.setCellValueFactory(new PropertyValueFactory<>("returned"));
-
+        colMemberName.setCellValueFactory(new PropertyValueFactory<>("memberName"));
         // Custom cell factory cho cột Returned
         colReturned.setCellFactory(column -> new TableCell<Loan, Boolean>() {
             @Override

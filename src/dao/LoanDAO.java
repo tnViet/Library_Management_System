@@ -13,19 +13,24 @@ public class LoanDAO {
     // Lấy tất cả phiếu mượn
     public List<Loan> getAllLoans() throws SQLException {
         List<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans ORDER BY loan_date DESC";
+        String query = "SELECT l.*, m.name AS member_name " +
+                "FROM loans l LEFT JOIN members m ON l.member_id = m.id " +
+                "ORDER BY loan_date DESC";
+
 
         try (Connection conn = DBUtil.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
+
             while (rs.next()) {
-                Loan loan = extractLoanFromResultSet(rs);
+                Loan loan = extractLoanWithMemberName(rs);
                 loans.add(loan);
             }
         }
         return loans;
     }
+
 
 
     // Lấy phiếu mượn theo Member ID
@@ -171,4 +176,28 @@ public class LoanDAO {
 
         return new Loan(id, memberId, bookId, loanDate, dueDate, returnDate, returned);
     }
+    private Loan extractLoanWithMemberName(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        int memberId = rs.getInt("member_id");
+        int bookId = rs.getInt("book_id");
+        // them cai nay
+        String memberName = rs.getString("member_name");
+        LocalDate loanDate = rs.getDate("loan_date").toLocalDate();
+        LocalDate dueDate = rs.getDate("due_date").toLocalDate();
+
+
+        Date returnDateSql = rs.getDate("return_date");
+        LocalDate returnDate = (returnDateSql != null) ? returnDateSql.toLocalDate() : null;
+
+
+        boolean returned = rs.getBoolean("returned");
+
+
+        Loan loan = new Loan(id, memberId, memberName, bookId, loanDate, dueDate, returnDate, returned);
+
+
+        // Không lưu memberName vào Loan, chỉ dùng để bind TableView
+        return loan;
+    }
+
 }

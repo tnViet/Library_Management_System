@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.Integer?>
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.BookController" prefHeight="700.0" prefWidth="1000.0">
 
@@ -32,6 +34,7 @@
                         <ColumnConstraints minWidth="120" prefWidth="120" />
                         <ColumnConstraints minWidth="250" prefWidth="300" />
                         <ColumnConstraints minWidth="120" prefWidth="120" />
+                        <ColumnConstraints minWidth="250" prefWidth="300" />
                         <ColumnConstraints minWidth="250" prefWidth="300" />
                     </columnConstraints>
 
@@ -61,6 +64,17 @@
                     <Label text="Số bản có sẵn:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <TextField fx:id="txtAvailableCopies" promptText="Nhập số có sẵn"
                                GridPane.columnIndex="3" GridPane.rowIndex="2" />
+<!--                    <ComboBox GridPane.columnIndex="3" GridPane.rowIndex="2" prefWidth="250">-->
+<!--                        <items>-->
+<!--                            <FXCollections fx:factory="observableArrayList">-->
+<!--                                <Integer fx:value="10"/>-->
+<!--                                <Integer fx:value="20"/>-->
+<!--                                <Integer fx:value="30"/>-->
+<!--                            </FXCollections>-->
+<!--                        </items>-->
+<!--                    </ComboBox>-->
+
+
                 </GridPane>
 
                 <!-- Buttons -->
