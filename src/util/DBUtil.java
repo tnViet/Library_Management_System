@@ -10,7 +10,7 @@ public class DBUtil {
     // Thông tin kết nối MySQL (XAMPP mặc định)
     private static final String DB_URL = "jdbc:mysql://localhost:3306/library_db";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = ""; // XAMPP mặc định không có password
+    private static final String DB_PASSWORD = "";
 
     // Driver JDBC cho MySQL
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";

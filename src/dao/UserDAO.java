@@ -221,7 +221,42 @@ public class UserDAO {
             throw new RuntimeException("Error hashing password", e);
         }
     }
-
+//    public List<User> getAllUsersSortedByUsername() throws SQLException {
+//        List<User> users = new ArrayList<>();
+//        String query = "SELECT * FROM users ORDER BY username ASC";  // ← Thêm ORDER BY
+//
+//        try (Connection conn = DBUtil.getConnection();
+//             Statement stmt = conn.createStatement();
+//             ResultSet rs = stmt.executeQuery(query)) {
+//
+//            while (rs.next()) {
+//                User user = extractUserFromResultSet(rs);
+//                users.add(user);
+//            }
+//        }
+//        return users;
+//    }
+//    public List<User> getAllUsersSortedByRoleAndName() throws SQLException {
+//        List<User> users = new ArrayList<>();
+//        String query = "SELECT * FROM users ORDER BY " +
+//                "CASE role " +
+//                "  WHEN 'admin' THEN 1 " +
+//                "  WHEN 'librarian' THEN 2 " +
+//                "  WHEN 'member' THEN 3 " +
+//                "END, " +
+//                "username ASC";
+//
+//        try (Connection conn = DBUtil.getConnection();
+//             Statement stmt = conn.createStatement();
+//             ResultSet rs = stmt.executeQuery(query)) {
+//
+//            while (rs.next()) {
+//                User user = extractUserFromResultSet(rs);
+//                users.add(user);
+//            }
+//        }
+//        return users;
+//    }
     // Helper method: Trích xuất User từ ResultSet
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");

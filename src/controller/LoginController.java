@@ -36,7 +36,6 @@ public class LoginController {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText();
 
-        // Validation
         if (username.isEmpty()) {
             showError("Vui lòng nhập username!");
             txtUsername.requestFocus();
@@ -49,14 +48,12 @@ public class LoginController {
         }
 
         try {
-            // Xác thực
             User user = userDAO.authenticate(username, password);
 
             if (user != null) {
                 // Lưu session
                 SessionManager.getInstance().setCurrentUser(user);
 
-                // Chuyển đến Dashboard
                 loadDashboard(user);
             } else {
                 showError("Username hoặc password không đúng!");

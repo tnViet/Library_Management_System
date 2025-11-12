@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Loan {
+//    private Member member;
     private int id;
     private int memberId;
     private int bookId;
@@ -76,6 +77,12 @@ public class Loan {
     public void setReturned(boolean returned) {
         this.returned = returned;
     }
+//    public Member getMember() {
+//        return member;
+//    }
+//    public void setMember(Member member) {
+//        this.member = member;
+//    }
 
     @Override
     public String toString() {

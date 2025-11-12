@@ -38,12 +38,10 @@ public class MemberController implements Initializable {
     private MemberDAO memberDAO;
     private ObservableList<Member> memberList;
 
-    // Email validation pattern
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
     );
 
-    // Phone validation pattern (Vietnam phone)
     private static final Pattern PHONE_PATTERN = Pattern.compile(
             "^(0|\\+84)[0-9]{9,10}$"
     );
@@ -53,7 +51,6 @@ public class MemberController implements Initializable {
         memberDAO = new MemberDAO();
         memberList = FXCollections.observableArrayList();
 
-        // Thiết lập các cột trong bảng
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -149,7 +146,6 @@ public class MemberController implements Initializable {
 
         if (validateInput()) {
             try {
-                // Kiểm tra email đã tồn tại chưa (ngoại trừ email của chính member này)
                 String newEmail = txtEmail.getText().trim().toLowerCase();
                 if (!newEmail.equals(selectedMember.getEmail()) &&
                         memberDAO.isEmailExists(newEmail)) {

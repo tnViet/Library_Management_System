@@ -7,7 +7,6 @@ public class SessionManager {
     private User currentUser;
 
     private SessionManager() {
-        // Private constructor for singleton
     }
 
     public static SessionManager getInstance() {

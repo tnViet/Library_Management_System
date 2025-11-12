@@ -31,6 +31,7 @@ public class BookDAO {
         String query = "SELECT * FROM books WHERE id = ?";
 
         try (Connection conn = DBUtil.getConnection();
+             // an toàn hơn
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, id);
@@ -51,8 +52,9 @@ public class BookDAO {
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-
+            // hai ben co the co nhieu ký tụ ___ hh ___
             String searchPattern = "%" + keyword + "%";
+            //
             pstmt.setString(1, searchPattern);
             pstmt.setString(2, searchPattern);
             pstmt.setString(3, searchPattern);

@@ -2,7 +2,7 @@ package model;
 
 public class Member {
     private int id;
-    private Integer userId;  // Thêm user_id (nullable)
+    private Integer userId;
     private String name;
     private String email;
     private String phone;

@@ -70,12 +70,19 @@
                 </HBox>
             </VBox>
 
+
             <!-- Search box -->
             <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10 0 10 0;">
                 <Label text="Tìm theo username:" />
                 <TextField fx:id="txtSearch" promptText="Nhập username" prefWidth="300" />
                 <Button text="Tìm kiếm" onAction="#handleSearch"
                         style="-fx-background-color: #FF9800; -fx-text-fill: white;" />
+
+
+<!--                <Button text="↕️ Sắp xếp A-Z" onAction="#handleSortByName"-->
+<!--                        style="-fx-background-color: #9C27B0; -fx-text-fill: white;" />-->
+<!--                <Button text="🔄 Reset" onAction="#handleResetSort"-->
+<!--                        style="-fx-background-color: #607D8B; -fx-text-fill: white;" />-->
             </HBox>
 
             <!-- Table -->

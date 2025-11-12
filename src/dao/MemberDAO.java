@@ -9,7 +9,6 @@ import java.util.List;
 
 public class MemberDAO {
 
-    // Lấy tất cả thành viên
     public List<Member> getAllMembers() throws SQLException {
         List<Member> members = new ArrayList<>();
         String query = "SELECT * FROM members ORDER BY name";
@@ -44,7 +43,6 @@ public class MemberDAO {
         return null;
     }
 
-    // **MỚI: Lấy member theo user_id**
     public Member getMemberByUserId(int userId) throws SQLException {
         String query = "SELECT * FROM members WHERE user_id = ?";
 

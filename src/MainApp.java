@@ -27,14 +27,13 @@ public class MainApp extends Application {
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
     }
-    // Hiển thị màn hình đăng nhập
     private void showLogin() {
         try {
             java.net.URL fxmlUrl = getClass().getResource("/view/Login.fxml");
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 800, 900);
+            Scene scene = new Scene(root, 600   , 700);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Library Management System - Đăng nhập");
             primaryStage.sizeToScene();
@@ -49,7 +48,6 @@ public class MainApp extends Application {
 
 
 
-    // Hiển thị Dashboard sau khi đăng nhập thành công
     public void showMainApp(User user) {
         this.currentUser = user;
 
@@ -64,10 +62,8 @@ public class MainApp extends Application {
     private void initRootLayout() {
         mainLayout = new BorderPane();
 
-        // Tạo MenuBar
         MenuBar menuBar = new MenuBar();
 
-        // Menu Hệ thống
         Menu menuSystem = new Menu("Hệ thống");
         MenuItem menuDashboard = new MenuItem("🏠 Trang chủ");
         MenuItem menuLogout = new MenuItem("🚪 Đăng xuất");
@@ -79,19 +75,17 @@ public class MainApp extends Application {
 
         menuSystem.getItems().addAll(menuDashboard, new SeparatorMenuItem(), menuLogout, menuExit);
 
-        // Menu Quản lý - động theo role
         Menu menuManage = new Menu("Quản lý");
         setupMenuByRole(menuManage);
 
-        // Thêm menu vào MenuBar
         menuBar.getMenus().addAll(menuSystem, menuManage);
 
-        // Set MenuBar vào layout
         mainLayout.setTop(menuBar);
 
         // Tạo Scene
         Scene scene = new Scene(mainLayout, 1000, 700);
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
@@ -137,7 +131,6 @@ public class MainApp extends Application {
         }
     }
 
-    // Hiển thị Dashboard
     private void showDashboard() {
         VBox dashboard = new VBox(25);
         dashboard.setStyle("""
@@ -180,9 +173,8 @@ public class MainApp extends Application {
             Button btnBooks = new Button("📚 Quản lý Sách");
             Button btnMembers = new Button("👤 Quản lý Thành viên");
             Button btnLoans = new Button("📖 Quản lý Mượn sách");
-            Button btnFines = new Button("💰 Quản lý Phạt");
 
-            for (Button b : new Button[]{btnUsers, btnBooks, btnMembers, btnLoans, btnFines}) {
+            for (Button b : new Button[]{btnUsers, btnBooks, btnMembers, btnLoans}) {
                 b.setStyle(baseButton);
                 b.setOnMouseEntered(e -> b.setStyle(baseButton + "-fx-background-color: #357ABD;"));
                 b.setOnMouseExited(e -> b.setStyle(baseButton));
@@ -294,7 +286,6 @@ public class MainApp extends Application {
         }
     }
 
-    // Hiển thị Alert
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

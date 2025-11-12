@@ -9,9 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.User;
 import util.SessionManager;
-
+import java.util.List;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -27,6 +28,7 @@ public class UserController implements Initializable {
     @FXML private ComboBox<String> cmbRole;
     @FXML private TextField txtSearch;
 
+    @FXML private Button btnSortByName;
     @FXML private Button btnAdd;
     @FXML private Button btnUpdate;
     @FXML private Button btnDelete;
@@ -38,7 +40,6 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Kiểm tra quyền admin
         if (!SessionManager.getInstance().isAdmin()) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Bạn không có quyền truy cập!");
             return;
@@ -52,7 +53,6 @@ public class UserController implements Initializable {
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        // Custom cell factory cho cột Role
         colRole.setCellFactory(column -> new TableCell<User, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -295,6 +295,54 @@ public class UserController implements Initializable {
         return true;
     }
 
+//    private boolean isSortedAZ = false;
+//    @FXML
+//    private void handleSortByName() {
+//        try {
+//            userList.clear();
+//
+//            if (isSortedAZ) {
+//                // Đang A-Z, chuyển sang Z-A
+//                List<User> users = userDAO.getAllUsersSortedByUsername();
+//                Collections.reverse(users);  // Đảo ngược
+//                userList.addAll(users);
+//                isSortedAZ = false;
+//
+//                // Cập nhật text button (nếu muốn)
+////                 btnSort.setText("↕️ Sắp xếp Z-A");
+//            } else {
+//                // Chưa sort hoặc đang Z-A, chuyển sang A-Z
+//                userList.addAll(userDAO.getAllUsersSortedByUsername());
+//                isSortedAZ = true;
+//
+//                // btnSort.setText("↕️ Sắp xếp A-Z");
+//            }
+//            userTable.setItems(userList);
+//        } catch (SQLException e) {
+//            showAlert(Alert.AlertType.ERROR, "Lỗi",
+//                    "Không thể sắp xếp: " + e.getMessage());
+//        }
+//    }
+//    @FXML
+//    private void handleResetSort() {
+//        isSortedAZ = false;
+//        loadUsers();
+//    }
+//
+//    // Hoặc sort nâng cao hơn (theo role rồi theo tên)
+//    @FXML
+//    private void handleSortByRoleAndName() {
+//        try {
+//            userList.clear();
+//            userList.addAll(userDAO.getAllUsersSortedByRoleAndName());
+//            userTable.setItems(userList);
+//            showAlert(Alert.AlertType.INFORMATION, "Thành công",
+//                    "Đã sắp xếp theo Role và Tên");
+//        } catch (SQLException e) {
+//            showAlert(Alert.AlertType.ERROR, "Lỗi",
+//                    "Không thể sắp xếp: " + e.getMessage());
+//        }
+//    }
     private void clearFields() {
         txtUsername.clear();
         txtPassword.clear();

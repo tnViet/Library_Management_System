@@ -71,7 +71,6 @@ public class MemberBookViewController implements Initializable {
             }
         });
 
-        // Load chỉ sách có sẵn
         loadAvailableBooks();
     }
 
